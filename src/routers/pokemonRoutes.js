@@ -1,16 +1,16 @@
 const express = require("express");
 const router = express.Router();
 
-const {readAuthData, verifyAuthData} = require("../middleware/authentication.js");
+const {readAuthData, verifyAuthData, exampleAsyncMiddleware} = require("../middleware/authentication.js");
 
 router.use(readAuthData);
-router.use(verifyAuthData);
+// router.use(verifyAuthData);
 
 router.get("/", (request, response) => {
 	response.json({message:"Router route activated!"});
 });
 
-router.get("/getbyid/:pokemonNumber", (request, response) => {
+router.get("/getbyid/:pokemonNumber", exampleAsyncMiddleware, verifyAuthData, (request, response) => {
 
 	let retrievedNumberFromUrl = request.params.pokemonNumber;
 
